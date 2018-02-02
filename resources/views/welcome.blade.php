@@ -85,9 +85,7 @@
                 </div>
 
                 <div class="links">
-                    <a>Robin</a>
                     <a>Ahasan</a>
-                    <a>Kalle</a>
                     <a>Jamahl</a>
                     <a>Team 9</a>
                 </div>
