@@ -34,6 +34,6 @@ class Retour extends Model
                             'date_difference',
                             'exported',
                             'claim'
-        ];
+    ];
 
 }

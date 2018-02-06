@@ -14,6 +14,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
+<style>
+    footer{
+        margin: 0;
+    }
+</style>
 <body>
 <div id="app">
     <nav class="my-navbar navbar " role="navigation" >

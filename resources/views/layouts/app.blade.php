@@ -56,6 +56,12 @@
                   opacity: 0;
               }
         }
+        body{
+            background-color: #2A3F54;
+        }
+        footer{
+            background-color: #fff;
+        }
     </style>
 
 </head>
@@ -94,7 +100,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="menu" class="site_title"><i class="fa fa-truck" aria-hidden="true"></i><span> Retourivit</span></a>
+                    <a href="{{ url('menu') }}" class="site_title"><i class="fa fa-truck" aria-hidden="true"></i><span> Retourivit</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -124,8 +130,8 @@
                         <ul class="nav side-menu">
                             <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="menu">Menu</a></li>
-                                    <li><a href="account">Account</a></li>
+                                    <li><a href="{{ url('menu') }}">Menu</a></li>
+                                    <li><a href="{{ url('account') }}">Account</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
@@ -142,20 +148,20 @@
                             <li><a><i class="fa fa-edit"></i> Retouren <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                 
-                                    <li><a href="retouren">Retouren verwerken</a></li>
-                                    <li><a href="retouren">Verwerkings geschiedenis</a></li>
+                                    <li><a href="{{ url('retouren') }}">Retouren verwerken</a></li>
+                                    <li><a href="{{ url('retouren') }}">Verwerkings geschiedenis</a></li>
 
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-desktop"></i> Importeren <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="import">Agents Importeren</a></li>
-                                    <li><a href="">Excel bestand samenstellen</a></li>
+                                    <li><a href="{{ url('import') }}">Agents Importeren</a></li>
+                                    <li><a href="{{ url('import') }}">Excel bestand samenstellen</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-bar-chart-o"></i> Statistieken <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="statistiek">Statistieken dashboard</a></li>
+                                    <li><a href="{{ url('statistiek') }}">Statistieken dashboard</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -208,29 +214,29 @@
                                 @else
                                     @admin
                                     <li>
-                                        <a href="rechten">
+                                        <a href="{{ url('rechten') }}">
                                             Rechten beheren
                                         </a>
                                     </li>
                                     @endadmin
                                     @both
                                     <li>
-                                        <a href="import">
+                                        <a href="{{ url('import') }}">
                                             Importeren Agents
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="retouren">
+                                        <a href="{{ url('retouren') }}">
                                             Retouren
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="statistiek">
+                                        <a href="{{ url('statistiek') }}">
                                             Statistieken
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="account">
+                                        <a href="{{ url('account') }}">
                                             Account gegevens
                                         </a>
                                     </li>

@@ -19,6 +19,7 @@ use App\Agent;
 
 
 
+
 class DataController extends Controller
 {
 
@@ -29,25 +30,14 @@ class DataController extends Controller
 
 
     public function insert(Request $request)
+
     {
-
-
-        $keys = \App\Retour::get()->where('geretourd', "==", false);
-
-
-        foreach ($keys as $key) {
-
-            $id = $key->id;
-
-
-        }
-
 
         $alles = request('alles');
         $invoicenumber = intval(request('invoicenumber'));
+        //Factuur nummer = $invoicenumber
 
         $total_orderamount = 0;
-        //set variable
 
         foreach ($alles as $all) {
 
@@ -60,9 +50,31 @@ class DataController extends Controller
             for ($x = 0; $x <= (count($array) - 1); $x++) {
 
                 $total_orderamount = $total_orderamount + $array[$x][3];
-                //IN TOTAAL BESTELDE ARTIKELEN
+                //IN TOTAAL BESTELDE ARTIKELEN  = $total_orderamount
 
-//                echo $array[$x][3];
+            }
+            foreach ($array as $row){
+
+                $name = $row[0];
+                $invoicedate = $row[1];
+                $customersince = $row[5];
+                $countryname = $row[6];
+                $email = $row[7];
+                $klantnr = $row[8];
+                $amountfc = $row[9];
+
+
+                $now = DB::raw(now());
+
+                $datetime2 = new DateTime($row[1]);
+                $datetime1 = new DateTime($now);
+                $interval = $datetime1->diff($datetime2);
+
+                $interval = $interval->format('%a');
+
+
+
+
             }
 
 
@@ -77,6 +89,12 @@ class DataController extends Controller
                 ) {
 
                     session()->flash('danger', 'Record bestaat al!');
+
+
+                    $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
+
+
+                    return view('index', compact('results'));
 
 
                 } else {
@@ -108,7 +126,9 @@ class DataController extends Controller
                         'invoice_price' => $s[4],
                         'invoice_quantity' => $s[3],
                         'if_credited' => $if_credited,
+//                        'customer_since' => $s[5],
                         'contact' => 'Nee',
+                        'claim' => 0,
                         'invoice_name' => $s[2],
                         'invoice_total' => $s[9],
                         'total_orderamount' => $total_orderamount,
@@ -117,90 +137,44 @@ class DataController extends Controller
                         'date_difference' => $interval,
                     ]);
 
-                    session()->flash('succes', 'Record toegevoegd!');
+//                    session()->flash('succes', 'Record toegevoegd!');
 
                 }
-                $naam = $s[0];
-                $factuurdatum = $s[1];
-                $artikel = $s[2];
-                $aantal = $s[3];
-                $prijs = $s[4];
-                $customersince = $s[5];
-                $countryname = $s[6];
-                $email = $s[7];
-                $klantr = $s[8];
-                $AmountFC = $s[9];
+//                $naam = $s[0];
+//                $factuurdatum = $s[1];
+//                $artikel = $s[2];
+//                $aantal = $s[3];
+//                $prijs = $s[4];
+//                $customersince = $s[5];
+//                $countryname = $s[6];
+//                $email = $s[7];
+//                $klantnr = $s[8];
+//                $AmountFC = $s[9];
             }
 
 
         }
 
 
-        $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
-
-
-        return view('index', compact('results'));
+        return view('retour', compact(['array',
+            'invoicenumber',
+            'total_orderamount',
+            'name',
+            'invoicedate',
+            'customersince',
+            'countryname',
+            'email',
+            'klantnr',
+            'amountfc',
+            'now',
+            'interval'
+        ]));
     }
 
-
-    public function export(Request $request)
-    {
-
-        if(Input::get('excel')) {
+    public function sheet(){
 
             $keys = \App\Retour::get()->where('geretourd', "==", false);
 
-
-            foreach ($keys as $key) {
-
-                $id = $key->id;
-
-
-                if(is_numeric($request->input('total' . $id))) {
-
-
-                    $credit_amount = $request->input('total' . $id);
-
-                    $record = \App\Retour::find($id);
-
-                    $record->credit_amount = $credit_amount;
-
-                    $record->save();
-
-
-
-
-                } else{
-
-                    session()->flash('danger', 'Het te crediteren bedrag mag alleen cijfers bevatten');
-
-                }
-
-                $product_quantity = $request->input('aantalterug' . $id);
-                $open_products = $request->input('aantalopen' . $id);
-                $reason = $request->input('reden' . $id);
-                $comment = $request->input('opmerking' . $id);
-                $if_credited = $request->input('gecrediteerd' . $id);
-                $carrier = $request->input('bezorger' . $id);
-                $claim = $request->input('claim' . $id);
-                $contact = $request->input('contact' . $id);
-
-
-                $record = \App\Retour::find($id);
-
-                $record->product_quantity = $product_quantity;
-                $record->open_products = $open_products;
-                $record->reason = $reason;
-                $record->comment = $comment;
-                $record->if_credited = $if_credited;
-                $record->contact = $contact;
-                $record->carrier = $carrier;
-                $record->claim = $claim;
-                $record->geretourd = true;
-
-                $record->save();
-
-            }
 
             $data = \App\Retour::where('exported', "==", false)->get([
                 'arrival_date',
@@ -215,10 +189,10 @@ class DataController extends Controller
                 'reason',
                 'comment',
                 'if_credited',
-                'contact',
+                'carrier',
                 'country_code',
                 'emailadress',
-                'carrier',
+                'contact',
                 'nlcall_id',
                 'agent_name',
                 'agent_id',
@@ -232,6 +206,7 @@ class DataController extends Controller
                 $record = \App\Retour::find($id);
 
                 $record->exported = true;
+                $record->geretourd = true;
 
                 $record->save();
 
@@ -311,12 +286,12 @@ class DataController extends Controller
 
 
                     $sheet->cell('A1', function($cell) {
-                    // manipulate the cell
-                    $cell->setFontWeight('bold');
-                    $cell->setFontSize(16);
-                    $cell->setValue('Aangifte datum');
-                    $cell->setAlignment('left');
-                });
+                        // manipulate the cell
+                        $cell->setFontWeight('bold');
+                        $cell->setFontSize(16);
+                        $cell->setValue('Aangifte datum');
+                        $cell->setAlignment('left');
+                    });
                     $sheet->cell('B1', function($cell) {
                         // manipulate the cell
                         $cell->setFontWeight('bold');
@@ -398,7 +373,7 @@ class DataController extends Controller
                         // manipulate the cell
                         $cell->setFontWeight('bold');
                         $cell->setFontSize(16);
-                        $cell->setValue('Contact');
+                        $cell->setValue('UPS/POST.nl');
                         $cell->setAlignment('left');
                     });
                     $sheet->cell('N1', function($cell) {
@@ -419,7 +394,7 @@ class DataController extends Controller
                         // manipulate the cell
                         $cell->setFontWeight('bold');
                         $cell->setFontSize(16);
-                        $cell->setValue('UPS/POST.nl');
+                        $cell->setValue('contact');
                         $cell->setAlignment('left');
                     });
                     $sheet->cell('Q1', function($cell) {
@@ -460,8 +435,12 @@ class DataController extends Controller
             $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
 
 
-            return view('index', compact(['results']));
-        }
+            return view('index', compact('results'));
+
+    }
+
+    public function export(Request $request)
+    {
 
         if(Input::get('db')) {
 
@@ -532,6 +511,73 @@ class DataController extends Controller
 
         }
 
+        if(Input::get('product')) {
+
+            $ids = $request->input('ids');
+
+            $ids = urldecode($ids);
+            $ids = unserialize($ids);
+
+            foreach ($ids as $id){
+
+
+                if(is_numeric($request->input('total' . $id))) {
+
+
+                    $credit_amount = $request->input('total' . $id);
+
+                    $record = \App\Retour::find($id);
+
+                    $record->credit_amount = $credit_amount;
+
+                    $record->save();
+
+
+
+
+                } else{
+
+                    session()->flash('danger', 'Het te crediteren bedrag mag alleen cijfers bevatten');
+
+                }
+
+
+
+                $product_quantity = $request->input('aantalterug' . $id);
+                $open_products = $request->input('aantalopen' . $id);
+                $reason = $request->input('reden' . $id);
+                $comment = $request->input('opmerking' . $id);
+                $if_credited = $request->input('gecrediteerd' . $id);
+                $carrier = $request->input('bezorger' . $id);
+                $claim = $request->input('claim' . $id);
+                $contact = $request->input('contact' . $id);
+
+
+                $record = \App\Retour::find($id);
+
+                $record->product_quantity = $product_quantity;
+                $record->open_products = $open_products;
+                $record->reason = $reason;
+                $record->comment = $comment;
+                $record->if_credited = $if_credited;
+                $record->contact = $contact;
+                $record->carrier = $carrier;
+                $record->claim = $claim;
+
+                $record->save();
+
+            }
+
+
+
+            $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
+
+
+            return view('index', compact('results'));
+
+
+        }
+
 
     }
 
@@ -584,6 +630,39 @@ class DataController extends Controller
         });
 
                 return back();
+
+    }
+
+    public function record($invoice_id) {
+
+        $retour = Retour::get()->where('invoice_id',$invoice_id);
+
+        foreach ($retour as $record) {
+            $invoicenumber = $record->invoice_id;
+            $total_orderamount = $record->total_orderamount;
+            $name = $record->customer_name;
+            $invoicedate = $record->invoice_date;
+//            $customersince = $record->customer_since;
+            $countryname = $record->country_code;
+            $email = $record->emailadress;
+            $klantnr = $record->customer_id;
+            $amountfc = $record->invoice_total;
+            $interval = $record->date_difference;
+        }
+
+        return view('edit', compact(['retour',
+            'invoicenumber',
+            'total_orderamount',
+            'name',
+            'invoicedate',
+            'countryname',
+            'email',
+            'klantnr',
+            'amountfc',
+            'interval'
+        ]));
+
+
 
     }
 

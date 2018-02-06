@@ -31,7 +31,11 @@ Route::get('/refresh', 'ApiController@refresh');
 //DataControl
 Route::post('/insert', 'DataController@insert');
 Route::post('/export', 'DataController@export');
+Route::get('/export', 'DataController@sheet');
 Route::post('/server', 'DataController@server');
+Route::get('/record/{invoice_id}', 'DataController@record');
+
+
 
 //Excel
 Route::get('/import', 'DataController@fileimport');

@@ -22,23 +22,24 @@ $( ".aantalterug" ).change(function() {
         var prijs = $('#prijs'+qtyid).val();
 
 
-        var ToCredit;
-
-        ToCredit = totaalaantal - aantalterug;
-
-        ToCredit = ToCredit * prijs;
-
-        ToCredit = ToCredit - totaalprijs;
-
-        if(ToCredit < 0){
-
-            ToCredit = ToCredit * -1;
-
-        } else {
-
-            ToCredit = 0;
-
-        }
+        var ToCredit = aantalterug * prijs;
+        // var ToCredit;
+        //
+        // ToCredit = totaalaantal - aantalterug;
+        //
+        // ToCredit = ToCredit * prijs;
+        //
+        // ToCredit = ToCredit - totaalprijs;
+        //
+        // if(ToCredit < 0){
+        //
+        //     ToCredit = ToCredit * -1;
+        //
+        // } else {
+        //
+        //     ToCredit = 0;
+        //
+        // }
 
         var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
 
@@ -62,24 +63,24 @@ $( ".aantalopen" ).change(function() {
     var totaalprijs = $('#totaalprijs'+qtyid).val();
     var prijs = $('#prijs'+qtyid).val();
 
-
-    var ToCredit;
-
-    ToCredit = totaalaantal - aantalterug;
-
-    ToCredit = ToCredit * prijs;
-
-    ToCredit = ToCredit - totaalprijs;
-
-    if(ToCredit < 0){
-
-        ToCredit = ToCredit * -1;
-
-    } else {
-
-        ToCredit = 0;
-
-    }
+    var ToCredit = aantalterug * prijs;
+    // var ToCredit;
+    //
+    // ToCredit = totaalaantal - aantalterug;
+    //
+    // ToCredit = ToCredit * prijs;
+    //
+    // ToCredit = ToCredit - totaalprijs;
+    //
+    // if(ToCredit < 0){
+    //
+    //     ToCredit = ToCredit * -1;
+    //
+    // } else {
+    //
+    //     ToCredit = 0;
+    //
+    // }
 
     var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
 
@@ -117,23 +118,25 @@ function Aantalterug(arg) {
         var prijs = $('#prijs'+qtyid).val();
 
 
-        var ToCredit;
+        // var ToCredit;
+        //
+        // ToCredit = totaalaantal - aantalterug;
+        //
+        // ToCredit = ToCredit * prijs;
+        //
+        // ToCredit = ToCredit - totaalprijs;
+        //
+        // if(ToCredit < 0){
+        //
+        //     ToCredit = ToCredit * -1;
+        //
+        // } else {
+        //
+        //     ToCredit = 0;
+        //
+        // }
+        var ToCredit = aantalterug * prijs;
 
-        ToCredit = totaalaantal - aantalterug;
-
-        ToCredit = ToCredit * prijs;
-
-        ToCredit = ToCredit - totaalprijs;
-
-        if(ToCredit < 0){
-
-            ToCredit = ToCredit * -1;
-
-        } else {
-
-            ToCredit = 0;
-
-        }
 
         var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
 
@@ -151,23 +154,26 @@ function Aantalterug(arg) {
         var prijs = $('#prijs'+qtyid).val();
 
 
-        var ToCredit;
+        // var ToCredit;
+        //
+        // ToCredit = totaalaantal - aantalterug;
+        //
+        // ToCredit = ToCredit * prijs;
+        //
+        // ToCredit = ToCredit - totaalprijs;
+        //
+        // if(ToCredit < 0){
+        //
+        //     ToCredit = ToCredit * -1;
+        //
+        // } else {
+        //
+        //     ToCredit = 0;
+        //
+        // }
 
-        ToCredit = totaalaantal - aantalterug;
+        var ToCredit = aantalterug * prijs;
 
-        ToCredit = ToCredit * prijs;
-
-        ToCredit = ToCredit - totaalprijs;
-
-        if(ToCredit < 0){
-
-            ToCredit = ToCredit * -1;
-
-        } else {
-
-            ToCredit = 0;
-
-        }
 
         var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
     });
@@ -195,23 +201,25 @@ function AantalOpen(arg) {
         var prijs = $('#prijs'+qtyid).val();
 
 
-        var ToCredit;
+        // var ToCredit;
+        //
+        // ToCredit = totaalaantal - aantalterug;
+        //
+        // ToCredit = ToCredit * prijs;
+        //
+        // ToCredit = ToCredit - totaalprijs;
+        //
+        // if(ToCredit < 0){
+        //
+        //     ToCredit = ToCredit * -1;
+        //
+        // } else {
+        //
+        //     ToCredit = 0;
+        //
+        // }
+        var ToCredit = aantalterug * prijs;
 
-        ToCredit = totaalaantal - aantalterug;
-
-        ToCredit = ToCredit * prijs;
-
-        ToCredit = ToCredit - totaalprijs;
-
-        if(ToCredit < 0){
-
-            ToCredit = ToCredit * -1;
-
-        } else {
-
-            ToCredit = 0;
-
-        }
 
         var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
 
@@ -229,23 +237,25 @@ function AantalOpen(arg) {
         var prijs = $('#prijs'+qtyid).val();
 
 
-        var ToCredit;
+        // var ToCredit;
+        //
+        // ToCredit = totaalaantal - aantalterug;
+        //
+        // ToCredit = ToCredit * prijs;
+        //
+        // ToCredit = ToCredit - totaalprijs;
+        //
+        // if(ToCredit < 0){
+        //
+        //     ToCredit = ToCredit * -1;
+        //
+        // } else {
+        //
+        //     ToCredit = 0;
+        //
+        // }
+        var ToCredit = aantalterug * prijs;
 
-        ToCredit = totaalaantal - aantalterug;
-
-        ToCredit = ToCredit * prijs;
-
-        ToCredit = ToCredit - totaalprijs;
-
-        if(ToCredit < 0){
-
-            ToCredit = ToCredit * -1;
-
-        } else {
-
-            ToCredit = 0;
-
-        }
 
         var retour = $('#total'+qtyid).val((ToCredit).toFixed(2));
     });
@@ -266,21 +276,20 @@ $("#basic-url").focus();
 
 
 
-
-$('#basic-url').click( function() {
-
-    // document.getElementById("myform").submit();
-    $('#db').click();
-
-
-
-});
+//KLIKKEN OP DE SEARCH ID BAR OM DE FORM TE REFRESHEN
+// $('#basic-url').click( function() {
+//
+//     // document.getElementById("myform").submit();
+//     $('#db').click();
+//
+//
+//
+// });
 
 
 setInterval(ajaxCall, 300000); //300000 MS == 5 minutes
 
 function ajaxCall() {
-    //do your AJAX stuff here
     var xhttp;
     xhttp = new XMLHttpRequest();
 
