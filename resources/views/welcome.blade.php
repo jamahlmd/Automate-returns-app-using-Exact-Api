@@ -81,7 +81,7 @@
 
             <div id="element" class="content">
                 <div class="title m-b-md">
-                    Retourivit
+                    Retourivit V2
                 </div>
 
                 <div class="links">
