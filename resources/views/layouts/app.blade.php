@@ -295,7 +295,7 @@
 
         <!-- footer content -->
         <footer class="footer_fixed">
-            &copy; Created by Comakers Windesheim Flevoland 2017-2018  <strong>Retourivit</strong> <a href="" download="">Gebruikershandleiding</a>
+            &copy; Created by Jamahl Mac-Donald & Ahasan Rajaratnam 2017-2018  <strong>Retourivit</strong>
         </footer>
         <!-- /footer content -->
     </div>
