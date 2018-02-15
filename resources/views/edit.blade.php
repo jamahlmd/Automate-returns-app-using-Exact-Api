@@ -275,11 +275,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <label for="contact{{ $id }}">Contact opnemen?</label>
+                                            <label for="contact{{ $id }}">Verkoper</label>
                                             <div class="select-style">
                                                 <select class="aantalopen" name='contact{{ $id }}'>
-                                                    <option @if( $record->contact == 'Ja')selected @endif value="Ja">Ja</option>
-                                                    <option @if( $record->contact == 'Nee')selected @endif  value="Nee">Nee</option>
+                                                    <option @if( $record->contact == 'Bol.com')selected @endif value="Bol.com">Bol.com</option>
+                                                    <option @if( $record->contact == 'Amazon')selected @endif value="Amazon">Amazon</option>
+                                                    <option @if( $record->contact == 'Dorivit')selected @endif value="Dorivit">Dorivit</option>
                                                 </select>
                                             </div>
                                         </td>

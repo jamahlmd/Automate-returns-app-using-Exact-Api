@@ -292,11 +292,12 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <label for="contact{{ $id }}">Contact opnemen?</label>
+                                            <label for="contact{{ $id }}">Verkoper</label>
                                             <div class="select-style">
                                                 <select class="aantalopen" name='contact{{ $id }}'>
-                                                    <option value="Ja">Ja</option>
-                                                    <option value="Nee" selected>Nee</option>
+                                                    <option value="Bol.com">Bol.com</option>
+                                                    <option value="Amazon">Amazon</option>
+                                                    <option value="Dorivit" selected>Dorivit</option>
                                                 </select>
                                             </div>
                                         </td>

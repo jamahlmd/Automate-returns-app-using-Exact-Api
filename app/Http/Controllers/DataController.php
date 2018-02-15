@@ -267,11 +267,11 @@ class DataController extends Controller
                         }
                     }
                     for ($i = 1; $i <= 400; $i ++){
-                        $cellvalue = $sheet->getCell('M'.$i);
+                        $cellvalue = $sheet->getCell('P'.$i);
 
-                        if($cellvalue == 'Ja'){
+                        if($cellvalue == 'Amazon' OR $cellvalue == 'Bol.com'){
 
-                            $sheet->cell('M'.$i, function($cell) {
+                            $sheet->cell('P'.$i, function($cell) {
 
                                 // manipulate the cell
                                 $cell->setBackground('#FFFF00');
@@ -394,7 +394,7 @@ class DataController extends Controller
                         // manipulate the cell
                         $cell->setFontWeight('bold');
                         $cell->setFontSize(16);
-                        $cell->setValue('contact');
+                        $cell->setValue('Verkoper');
                         $cell->setAlignment('left');
                     });
                     $sheet->cell('Q1', function($cell) {
