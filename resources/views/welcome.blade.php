@@ -25,6 +25,10 @@
 
             .full-height {
                 height: 100vh;
+                background-image: url("public/img/logo.png") !important;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
             }
 
             .flex-center {
@@ -80,15 +84,7 @@
             @endif
 
             <div id="element" class="content">
-                <div class="title m-b-md">
-                    Retourivit V2
-                </div>
 
-                <div class="links">
-                    <a>Ahasan</a>
-                    <a>Jamahl</a>
-                    <a>Team 9</a>
-                </div>
             </div>
         </div>
     </body>
