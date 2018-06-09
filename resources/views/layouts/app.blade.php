@@ -153,10 +153,10 @@
 
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-desktop"></i> Importeren <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-desktop"></i> Importeren/Exporteren <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{ url('import') }}">Agents Importeren</a></li>
-                                    <li><a href="{{ url('import') }}">Excel bestand samenstellen</a></li>
+                                    <li><a href="{{ url('/retourgegevensdownload') }}">Retour gegevens exporteren</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-bar-chart-o"></i> Statistieken <span class="fa fa-chevron-down"></span></a>

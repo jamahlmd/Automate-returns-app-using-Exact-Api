@@ -40,6 +40,8 @@ Route::get('/record/{invoice_id}', 'DataController@record');
 //Excel
 Route::get('/import', 'DataController@fileimport');
 Route::post('/import', 'DataController@import');
+Route::get('/retourgegevensdownload', 'DataController@downloadinterface');
+Route::post('/retourgegevensdownload', 'DataController@download');
 
 //User
 Route::get('/rechten', 'UserController@index');

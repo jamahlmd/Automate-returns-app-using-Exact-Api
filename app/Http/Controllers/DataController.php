@@ -218,24 +218,26 @@ class DataController extends Controller
             //prevent default
             //align left
 
+        //Datum van vandaag pakken
+        $datum = Date('d/m/Y');
 
-            Excel\Facades\Excel::create('Retourgegevens', function ($excel) use ($data) {
+
+
+        Excel\Facades\Excel::create('Retour Gegevens van '.$datum, function ($excel) use ($data,$datum) {
 
                 // Set the title
                 $excel->setTitle('Retourivit');
 
                 // Chain the setters
-                $excel->setCreator('Team 9')
+                $excel->setCreator('Ahasan & Jamahl')
                     ->setCompany('Dorivit');
 
                 // Call them separately
-                $excel->setDescription('Retour Gegevens');
+                $excel->setDescription('Retour Gegevens van '.$datum);
 
                 $excel->getDefaultStyle()
                     ->getAlignment()
                     ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
-
-//                dd($excel->getActiveSheet()->getCellByColumnAndRow($col-1, $row-1)->getValue());
 
 
                 $excel->sheet('Sheetname', function ($sheet) use ($data) {
@@ -663,6 +665,284 @@ class DataController extends Controller
         ]));
 
 
+
+    }
+
+    public function downloadinterface(){
+
+        return view('interface');
+    }
+
+    public function download(Request $request){
+
+        if($request['date']){
+
+            $inputDate = $request["date"];
+
+            $date = DateTime::createFromFormat('d/m/Y',$inputDate);
+
+            $year = $date->format('Y');
+            $month = $date->format('m');
+            $day = $date->format('d');
+
+            $data = Retour::whereYear('created_at',$year)
+                ->whereMonth('created_at',$month)
+                ->whereDay('created_at',$day)
+                ->get(
+                    [
+                        'arrival_date',
+                        'customer_id',
+                        'invoice_id',
+                        'invoice_date',
+                        'customer_name',
+                        'invoice_name',
+                        'product_quantity',
+                        'open_products',
+                        'credit_amount',
+                        'reason',
+                        'comment',
+                        'if_credited',
+                        'carrier',
+                        'country_code',
+                        'emailadress',
+                        'contact',
+                        'nlcall_id',
+                        'agent_name',
+                        'agent_id',
+                        'claim'
+                    ]
+                );
+
+            if($data) {
+
+
+                Excel\Facades\Excel::create('Retour Gegevens van ' . $inputDate, function ($excel) use ($data, $inputDate) {
+
+                    // Set the title
+                    $excel->setTitle('Retourivit');
+
+                    // Chain the setters
+                    $excel->setCreator('Ahasan & Jamahl')
+                        ->setCompany('Dorivit');
+
+                    // Call them separately
+                    $excel->setDescription('Retour Gegevens van' . $inputDate);
+
+                    $excel->getDefaultStyle()
+                        ->getAlignment()
+                        ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+
+                    $excel->sheet('Sheetname', function ($sheet) use ($data) {
+
+                        $sheet->fromArray($data);
+
+
+                        // Set multiple column formats
+                        $sheet->setColumnFormat(array(
+                            'B' => '0.00',
+                        ));
+
+                        //credit check
+                        for ($i = 1; $i <= 400; $i++) {
+                            $cellvalue = $sheet->getCell('L' . $i);
+
+                            if ($cellvalue == 'Niet') {
+
+                                // Set black background
+                                $sheet->row($i, function ($row) {
+
+                                    // call cell manipulation methods
+                                    $row->setBackground('#FF0000');
+                                    $row->setFontColor('#ffffff');
+
+                                });
+
+
+                            }
+                        }
+                        for ($i = 1; $i <= 400; $i++) {
+                            $cellvalue = $sheet->getCell('P' . $i);
+
+                            if ($cellvalue == 'Amazon' OR $cellvalue == 'Bol.com') {
+
+                                $sheet->cell('P' . $i, function ($cell) {
+
+                                    // manipulate the cell
+                                    $cell->setBackground('#FFFF00');
+                                    $cell->setFontColor('#000000');
+
+                                });
+
+
+                            }
+                        }
+
+
+                        $sheet->cell('A1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Aangifte datum');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('B1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('KlantNr');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('C1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Factuur nr');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('D1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('factuur d.d.');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('E1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Naam');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('F1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Producten');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('G1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Aantal');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('H1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Open producten');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('I1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Te crediteren');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('J1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Reden');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('K1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Extra');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('L1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Crediteren wel of niet?');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('M1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('UPS/POST.nl');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('N1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Landcode');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('O1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Email');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('P1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('Verkoper');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('Q1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('nl-call nr.');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('R1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('nl-call naam');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('S1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('nr.');
+                            $cell->setAlignment('left');
+                        });
+                        $sheet->cell('T1', function ($cell) {
+                            // manipulate the cell
+                            $cell->setFontWeight('bold');
+                            $cell->setFontSize(16);
+                            $cell->setValue('claim');
+                            $cell->setAlignment('left');
+                        });
+
+
+                    });
+
+                })->download('xls');
+
+            } else {
+                session()->flash('danger','Geen retourgegevens gevonden op deze datum');
+
+                return back();
+            }
+
+
+            session()->flash('success','gegevens zijn gedownload!');
+
+            return back();
+
+
+
+        } else {
+            session()->flash('danger','Vul een datum in!');
+
+            return back();
+        }
 
     }
 

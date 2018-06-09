@@ -187,7 +187,7 @@ function ajaxCall() {
     var xhttp;
     xhttp = new XMLHttpRequest();
 
-    xhttp.open("GET", "refresh", true);
+    xhttp.open("GET", "/refresh", true);
     xhttp.send();
 }
 

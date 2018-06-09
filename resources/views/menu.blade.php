@@ -4,7 +4,7 @@
 
 @section('content')
 
-@both
+ @both
 
 <div class="page-title">
     <div class="title_left">
