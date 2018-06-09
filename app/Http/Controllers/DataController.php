@@ -679,8 +679,6 @@ class DataController extends Controller
 
             $inputDate = $request["date"];
 
-            $inputDate = "20-20-2015";
-
             $inputDate = preg_replace('/-/','/',$inputDate);
 
             $date = DateTime::createFromFormat('d/m/Y',$inputDate);
@@ -717,7 +715,7 @@ class DataController extends Controller
                     ]
                 );
 
-            if($data) {
+            if(count($data)) {
 
 
                 Excel\Facades\Excel::create('Retour Gegevens van ' . $inputDate, function ($excel) use ($data, $inputDate) {
