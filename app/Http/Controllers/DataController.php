@@ -679,6 +679,10 @@ class DataController extends Controller
 
             $inputDate = $request["date"];
 
+            $inputDate = "20-20-2015";
+
+            $inputDate = preg_replace('/-/','/',$inputDate);
+
             $date = DateTime::createFromFormat('d/m/Y',$inputDate);
 
             $year = $date->format('Y');
