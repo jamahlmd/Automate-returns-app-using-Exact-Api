@@ -175,6 +175,9 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <form method="post" action="export" id="myform2">
+                        <button class="btn btn-lg float-right btn-danger" name="UPS" value="UPS" form="myform2">UPS</button>
+                        <button class="btn btn-lg float-right btn-info" name="POSTNL" value="POSTNL" form="myform2">PostNL</button>
+
                         {{csrf_field()}}
 
 

@@ -494,6 +494,7 @@ class DataController extends Controller
                     $record->reason = $reason;
                     $record->comment = $comment;
                     $record->if_credited = $if_credited;
+                    //Contact is verkoper
                     $record->contact = $contact;
                     $record->carrier = $carrier;
                     $record->claim = $claim;
@@ -514,6 +515,7 @@ class DataController extends Controller
         }
 
         if(Input::get('product')) {
+
 
             $ids = $request->input('ids');
 
@@ -562,6 +564,7 @@ class DataController extends Controller
                 $record->reason = $reason;
                 $record->comment = $comment;
                 $record->if_credited = $if_credited;
+                //Contact is verkoper
                 $record->contact = $contact;
                 $record->carrier = $carrier;
                 $record->claim = $claim;
@@ -580,8 +583,71 @@ class DataController extends Controller
 
         }
 
+        if(Input::get('UPS')) {
 
-    }
+
+
+            $ids = $request->input('ids');
+
+            $ids = urldecode($ids);
+            $ids = unserialize($ids);
+
+            foreach ($ids as $id){
+
+                $record = \App\Retour::find($id);
+
+                $record->product_quantity = $record->invoice_quantity;
+                $record->credit_amount = $record->invoice_quantity * $record->invoice_price;
+                $record->reason = "Geweigerd";
+                $record->if_credited = "Wel";
+                //Contact is verkoper
+                $record->contact = "Dorivit";
+                $record->carrier = 'UPS';
+
+                $record->save();
+
+            }
+
+
+            $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
+
+
+            return view('index', compact('results'));
+        }
+
+
+        if(Input::get('POSTNL')) {
+
+
+            $ids = $request->input('ids');
+
+            $ids = urldecode($ids);
+            $ids = unserialize($ids);
+
+            foreach ($ids as $id){
+
+                $record = \App\Retour::find($id);
+
+                $record->product_quantity = $record->invoice_quantity;
+                $record->credit_amount = $record->invoice_quantity * $record->invoice_price;
+                $record->reason = "Geen Reden";
+                $record->if_credited = "Wel";
+                //Contact is verkoper
+                $record->contact = "Dorivit";
+                $record->carrier = 'PostNL';
+
+                $record->save();
+
+            }
+
+
+            $results = \App\Retour::orderBy('created_at', 'DESC')->get()->where('geretourd','==',false);
+
+
+            return view('index', compact('results'));
+        }
+
+     }
 
 
 //    public function import(){
@@ -728,7 +794,7 @@ class DataController extends Controller
                         ->setCompany('Dorivit');
 
                     // Call them separately
-                    $excel->setDescription('Retour Gegevens van' . $inputDate);
+                    $excel->setDescription('Retour Gegevens van ' . $inputDate);
 
                     $excel->getDefaultStyle()
                         ->getAlignment()

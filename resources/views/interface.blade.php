@@ -10,12 +10,9 @@
 
         <div class="form-group">
             <label for="exampleInputEmail1">Kies een datum</label>
-            <input type="text" name="date" class="form-control datepicker" placeholder="..." id="some-id">
+            <input readonly type="text" name="date" class="form-control datepicker" placeholder="..." id="some-id">
             <small id="emailHelp" class="form-text text-muted">Als u op Download klikt worden alle retourgegevens van de desbtreffende datum gedownload.</small>
         </div>
-
-
-        {{--<input name="date" type="text" id="some-id" class="datepicker"/>--}}
 
     <button type="submit" class="btn btn-block btn-info">Download</button>
     </form>
